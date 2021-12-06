@@ -3,9 +3,10 @@
 #include <iostream>
 #include <stdlib.h>
 
-int** transpose(int** matrix, int cols, int rows);
 void printMatrix(int** matrix, int cols, int rows);
+void transpose(int** &matrix, int &cols, int &rows);
 int** initMatrix(int cols, int rows);
+int** echelonForm(int** matrix, int cols, int rows);
 
 int main(int argc, char* argv[]) {
     char* p;
@@ -24,7 +25,7 @@ int main(int argc, char* argv[]) {
 
     printMatrix(matrix, cols, rows);
     
-    matrix = transpose(matrix, cols, rows);
+    transpose(matrix, cols, rows);
 
     printMatrix(matrix, cols, rows);
 
@@ -39,10 +40,8 @@ int** initMatrix(int cols, int rows) {
     // populate matrix
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            int tempNum;
             std::cout << "Position [" << i << "][" << j << "]: ";
-            std::cin >> tempNum;
-            matrix[i][j] = tempNum;
+            std::cin >> matrix[i][j];
         }
     }
     return matrix;
@@ -59,18 +58,33 @@ void printMatrix(int** matrix, int cols, int rows) {
     }
 }
 
-int** transpose(int** matrix, int cols, int rows) {
-    // transpose matrix
-    int newRows = cols;
-    int newCols = rows;
-    int** transposedMatrix = new int*[newRows];
-    for (int i = 0; i < newRows; ++i) transposedMatrix[i] = new int[newCols];
+void transpose(int** &matrix, int &cols, int &rows) {
+    // swap rows and columns
+    int temp = rows;
+    rows = cols;
+    cols = temp;
+
+    int** transposedMatrix = new int*[rows];
+    for (int i = 0; i < rows; ++i) transposedMatrix[i] = new int[cols];
 
     for (int j = 0; j < cols; j++) {
         for (int i = 0; i < rows; i++) {
             transposedMatrix[i][j] = matrix[j][i];
         }
     }
+    
+    matrix = new int*[rows];
+    for (int i = 0; i < rows; ++i) matrix[i] = new int[cols];
 
-    return transposedMatrix;
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            matrix[i][j] = transposedMatrix[i][j];
+        }
+    }
 }
+
+/*
+int** echelonForm(int** matrix, int cols, int rows) {
+
+}
+*/
