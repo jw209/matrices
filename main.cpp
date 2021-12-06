@@ -6,7 +6,7 @@
 void printMatrix(int** matrix, int cols, int rows);
 void transpose(int** &matrix, int &cols, int &rows);
 int** initMatrix(int cols, int rows);
-int** echelonForm(int** matrix, int cols, int rows);
+int det(int** matrix, int cols, int rows);
 
 int main(int argc, char* argv[]) {
     char* p;
@@ -24,10 +24,18 @@ int main(int argc, char* argv[]) {
     std::cout << "\n\n";
 
     printMatrix(matrix, cols, rows);
+
+    std::cout << "\n\n";
+
+    std::cout << "Determinant of original matrix: " << det(matrix, cols, rows) << "\n\n";
     
     transpose(matrix, cols, rows);
 
     printMatrix(matrix, cols, rows);
+
+    std::cout << "\n\n";
+
+    std::cout << "Determinant of transposed matrix: " << det(matrix, cols, rows) << "\n\n";
 
     return 0;
 }
@@ -83,8 +91,13 @@ void transpose(int** &matrix, int &cols, int &rows) {
     }
 }
 
-/*
-int** echelonForm(int** matrix, int cols, int rows) {
-
+int det(int** matrix, int cols, int rows) {
+    int det = 0;
+    if (cols != rows) {
+        std::cout << "Cannot compute determinate of non-square matrix\n";
+    } else if (cols == 2 && rows == 2) {
+        det = (matrix[0][0]*matrix[1][1]) - (matrix[1][0]*matrix[0][1]);
+    } else {
+    }
+    return det;
 }
-*/
