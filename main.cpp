@@ -1,7 +1,11 @@
 // Matrix operations
 // Created by: Jesse Wood on 12/6/2021
 #include <iostream>
-#include <stdlib.h> 
+#include <stdlib.h>
+
+int** transpose(int** matrix, int cols, int rows);
+void printMatrix(int** matrix, int cols, int rows);
+int** initMatrix(int cols, int rows);
 
 int main(int argc, char* argv[]) {
     char* p;
@@ -14,6 +18,20 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Starting with matrix: " << rows << " rows and " << cols << " columns\n";
 
+    int** matrix = initMatrix(cols, rows);
+
+    std::cout << "\n\n";
+
+    printMatrix(matrix, cols, rows);
+    
+    matrix = transpose(matrix, cols, rows);
+
+    printMatrix(matrix, cols, rows);
+
+    return 0;
+}
+
+int** initMatrix(int cols, int rows) {
     // initialize matrix
     int** matrix = new int*[rows];
     for (int i = 0; i < rows; ++i) matrix[i] = new int[cols];
@@ -27,10 +45,11 @@ int main(int argc, char* argv[]) {
             matrix[i][j] = tempNum;
         }
     }
+    return matrix;
+}
 
-    std::cout << "\n\n";
-
-    // print matrix
+void printMatrix(int** matrix, int cols, int rows) {
+    // print matrix transposed
     for (int i = 0; i < rows; i++) {
         std::cout << "| ";
         for (int j = 0; j < cols; j++) {
@@ -38,16 +57,9 @@ int main(int argc, char* argv[]) {
         }
         std::cout << " |\n";
     }
+}
 
-    /*
-        [1][2]
-        [3][4]
-
-        [1][3]
-        [2][4]
-
-    */
-
+int** transpose(int** matrix, int cols, int rows) {
     // transpose matrix
     int newRows = cols;
     int newCols = rows;
@@ -60,15 +72,5 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // print matrix transposed
-    for (int i = 0; i < rows; i++) {
-        std::cout << "| ";
-        for (int j = 0; j < cols; j++) {
-            std::cout << transposedMatrix[i][j] << " ";
-        }
-        std::cout << " |\n";
-    }
-
-    return 0;
+    return transposedMatrix;
 }
-
