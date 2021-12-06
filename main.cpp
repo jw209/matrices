@@ -39,6 +39,36 @@ int main(int argc, char* argv[]) {
         std::cout << " |\n";
     }
 
+    /*
+        [1][2]
+        [3][4]
+
+        [1][3]
+        [2][4]
+
+    */
+
+    // transpose matrix
+    int newRows = cols;
+    int newCols = rows;
+    int** transposedMatrix = new int*[newRows];
+    for (int i = 0; i < newRows; ++i) transposedMatrix[i] = new int[newCols];
+
+    for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < rows; i++) {
+            transposedMatrix[i][j] = matrix[j][i];
+        }
+    }
+
+    // print matrix transposed
+    for (int i = 0; i < rows; i++) {
+        std::cout << "| ";
+        for (int j = 0; j < cols; j++) {
+            std::cout << transposedMatrix[i][j] << " ";
+        }
+        std::cout << " |\n";
+    }
+
     return 0;
 }
 
